@@ -1,32 +1,36 @@
 package LV01;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class BestAlbum {
     public static void main(String[] args) {
         String[] genres = {"classic", "pop", "classic", "classic", "pop"};
         int[] plays = {500, 600, 150, 800, 2500};
 
-        solution(genres, plays);
+        int[] s = solution(genres, plays);
+
+        System.out.println(Arrays.toString(s));
     }
 
-    private static void solution(String[] genres, int[] plays) {
-        HashMap<String, Integer> map = new HashMap<>();
+    private static int[] solution(String[] genres, int[] plays) {
+        int[] answer = {};
 
-        for(int i = 0; i < genres.length; i++) {
-            if(map.containsKey(genres[i])) {
-                map.put(genres[i], map.get(genres[i] + plays[i]));
+        HashMap<String, Integer> genresMap = new HashMap();
+
+        // 같은 장르로 play한 횟수
+        for (int i = 0; i < genres.length; i++) {
+            if (genresMap.containsKey(genres[i])) {
+                genresMap.put(genres[i], genresMap.get(genres[i]) + plays[i]);
             } else {
-                map.put(genres[i], plays[i]);
+                genresMap.put(genres[i], plays[i]);
             }
         }
 
-        List<String> genresList = new ArrayList<>(map.keySet());
-        genresList.sort((o1, o2) -> (map.get(o2).compareTo(map.get(o1))));
+        // 내림차순
+        List<String> genresList = new ArrayList<>(genresMap.keySet());
+        Collections.sort(genresList, (o1, o2) -> (genresMap.get(o2).compareTo(genresMap.get(o1))));
 
+        // 장르별 play
         List<Integer> answerList = new ArrayList<>();
         genresList.forEach(li -> {
             HashMap<Integer, Integer> playsMap = new HashMap<>();
@@ -45,5 +49,12 @@ public class BestAlbum {
                 answerList.add(playsList.get(1));
             }
         });
+        answer = new int[answerList.size()];
+
+        for (int idx = 0; idx < answerList.size(); idx++) {
+            answer[idx] = answerList.get(idx);
+        }
+
+        return answer;
     }
 }
