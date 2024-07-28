@@ -1,6 +1,7 @@
 package Programmers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AreaOf2 {
@@ -8,6 +9,8 @@ public class AreaOf2 {
         int[] answer = {};
 
         List<Integer> list = new ArrayList<>();
+
+        
 
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] == 2) {
